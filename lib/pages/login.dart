@@ -1,5 +1,5 @@
-import 'package:final_year_project_app/pages/Signup.dart';
 import 'package:final_year_project_app/pages/dashboard.dart';
+import 'package:final_year_project_app/pages/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -43,32 +43,41 @@ class _LoginState extends State<Login> {
                 height: 24,
               ),
               Container(
-                  width: 330,
-                  height: 50,
-                  padding: EdgeInsets.symmetric(horizontal: 18),
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(borderSide: BorderSide.none),
-                        hintText: 'Email',
-                        prefixIcon: Icon(Icons.email)),
-                    textAlign: TextAlign.center,
-                  )),
+                width: 330,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                    labelText: 'Email',
+                    labelStyle: GoogleFonts.headlandOne(color: Colors.white),
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Colors.white,
+                    ),
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
               SizedBox(
-                height: 18,
+                height: 12,
               ),
               Container(
                 width: 330,
-                height: 50,
-                padding: EdgeInsets.symmetric(horizontal: 18),
-                decoration: BoxDecoration(color: Colors.white),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(borderSide: BorderSide.none),
-                      hintText: 'Password',
-                      prefixIcon: Icon(Icons.vpn_key),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                      labelText: 'Password',
+                      labelStyle: GoogleFonts.headlandOne(color: Colors.white),
+                      prefixIcon: Icon(
+                        Icons.vpn_key,
+                        color: Colors.white,
+                      ),
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.remove_red_eye),
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: Colors.white,
+                        ),
                         onPressed: () {
                           setState(() {
                             if (hidepassword) {
@@ -79,37 +88,60 @@ class _LoginState extends State<Login> {
                           });
                         },
                       )),
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   obscureText: hidepassword,
                 ),
               ),
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(horizontal: 18),
+                alignment: Alignment.topRight,
+                child: TextButton(
+                  child: Text(
+                    'Forgot your password?',
+                    style: GoogleFonts.headlandOne(color: Colors.white),
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+              InkWell(
+                child: Container(
+                    width: 330,
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(25),
+                        border: Border.all(color: Colors.white)),
+                    child: Center(
+                      child: Text('LOGIN',
+                          style: GoogleFonts.headlandOne(color: Colors.orange)),
+                    )),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Dashboard()));
+                },
+              ),
               SizedBox(
-                height: 18,
+                height: 12,
               ),
               InkWell(
                 child: Container(
                   width: 330,
-                  padding: EdgeInsets.symmetric(vertical: 6),
-                  decoration: BoxDecoration(color: Colors.lightBlue),
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      border: Border.all(color: Colors.white)),
                   child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Login',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Icon(
-                          Icons.login,
-                          color: Colors.white,
-                        )
-                      ],
-                    ),
-                  ),
+                      child: Text(
+                    'SIGN UP',
+                    style: GoogleFonts.headlandOne(color: Colors.white),
+                  )),
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Dashboard()));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return SignUp();
+                  }));
                 },
               )
             ],
