@@ -8,9 +8,9 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(textTheme: GoogleFonts.headlandOneTextTheme()),
       home: Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text(
               'FIREMED',
@@ -23,10 +23,13 @@ class Dashboard extends StatelessWidget {
           body: Container(
             width: double.infinity,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomLeft,
-                    colors: [Colors.red, Colors.orange])),
+                color: Colors.black,
+                image: DecorationImage(
+                  image: AssetImage('images/firebackground.jpg'),
+                  colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.5), BlendMode.dstATop),
+                  fit: BoxFit.cover,
+                )),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

@@ -25,7 +25,7 @@ class _SignUpState extends State<SignUp> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('Enter your details to create an account',
+              Text('Create an account',
                   style: GoogleFonts.headlandOne(
                       fontSize: 18, color: Colors.white)),
               SizedBox(
