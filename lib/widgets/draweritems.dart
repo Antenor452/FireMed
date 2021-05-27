@@ -1,10 +1,21 @@
-import 'package:final_year_project_app/pages/dashboard.dart';
-import 'package:final_year_project_app/pages/tipsspage.dart';
+import 'package:final_year_project_app/pages/termsandconditions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../pages/login.dart';
+import 'package:final_year_project_app/pages/dashboard.dart';
+import 'package:final_year_project_app/pages/tipsspage.dart';
 
 class DrawerItems extends StatelessWidget {
+  void launchURL() async {
+    const url = 'https://www.gnfs.gov.gh/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -88,6 +99,9 @@ class DrawerItems extends StatelessWidget {
                 Text('Fire Service Website')
               ],
             ),
+            onTap: () {
+              launchURL();
+            },
           ),
           Divider(color: Colors.black),
           ListTile(
@@ -100,6 +114,10 @@ class DrawerItems extends StatelessWidget {
                 Text('Terms and Conditions')
               ],
             ),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Terms()));
+            },
           ),
           ListTile(
               title: Row(

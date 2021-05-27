@@ -1,7 +1,5 @@
-import 'package:final_year_project_app/pages/login.dart';
 import 'package:final_year_project_app/widgets/draweritems.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Dashboard extends StatelessWidget {
