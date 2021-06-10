@@ -55,7 +55,7 @@ class _LoginState extends State<Login> {
                       color: Colors.white,
                     ),
                   ),
-                  textAlign: TextAlign.left,
+                  style: GoogleFonts.headlandOne(color: Colors.white),
                 ),
               ),
               SizedBox(
@@ -88,7 +88,7 @@ class _LoginState extends State<Login> {
                           });
                         },
                       )),
-                  textAlign: TextAlign.left,
+                  style: GoogleFonts.headlandOne(color: Colors.white),
                   obscureText: hidepassword,
                 ),
               ),

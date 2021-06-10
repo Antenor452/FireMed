@@ -1,5 +1,6 @@
 import 'package:final_year_project_app/widgets/draweritems.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Dashboard extends StatelessWidget {
@@ -41,18 +42,25 @@ class Dashboard extends StatelessWidget {
                       child: Container(
                         height: 100,
                         width: 100,
-                        decoration: BoxDecoration(
-                            gradient: RadialGradient(
-                                colors: [Colors.red, Colors.blue])),
+                        decoration: BoxDecoration(color: Colors.red),
                         child: Center(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Icon(Icons.fire_extinguisher,
-                                  color: Colors.white),
-                              Text(
-                                'Alarm',
-                                style: TextStyle(color: Colors.white),
+                              Container(
+                                child: Icon(
+                                  FontAwesomeIcons.bell,
+                                  color: Colors.white,
+                                  size: 36,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  'Alarm',
+                                  style: GoogleFonts.headlandOne(
+                                    color: Colors.white,
+                                  ),
+                                ),
                               )
                             ],
                           ),

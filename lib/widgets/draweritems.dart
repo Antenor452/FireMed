@@ -36,7 +36,7 @@ class DrawerItems extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 18,
                   ),
                   Text('Rahim Flash',
                       style: TextStyle(
@@ -49,7 +49,7 @@ class DrawerItems extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.orangeAccent),
           ),
           Container(
-            margin: EdgeInsets.only(top: 18, left: 18),
+            margin: EdgeInsets.only(top: 12, left: 18),
             child:
                 Text('Your activities', style: TextStyle(color: Colors.black)),
           ),
@@ -86,7 +86,7 @@ class DrawerItems extends StatelessWidget {
           ),
           Divider(color: Colors.black),
           Container(
-            margin: EdgeInsets.only(top: 18, left: 18),
+            margin: EdgeInsets.only(top: 12, left: 18),
             child: Text('Useful'),
           ),
           ListTile(
@@ -124,7 +124,7 @@ class DrawerItems extends StatelessWidget {
             children: [
               Icon(Icons.lock_open),
               SizedBox(
-                width: 18,
+                width: 15,
               ),
               Text('Privacy and Policy')
             ],
@@ -134,7 +134,7 @@ class DrawerItems extends StatelessWidget {
               children: [
                 Icon(Icons.info),
                 SizedBox(
-                  width: 18,
+                  width: 15,
                 ),
                 Text('About')
               ],
@@ -145,7 +145,7 @@ class DrawerItems extends StatelessWidget {
               children: [
                 Icon(Icons.feedback),
                 SizedBox(
-                  width: 18,
+                  width: 15,
                 ),
                 Text('Feedback')
               ],
@@ -160,7 +160,7 @@ class DrawerItems extends StatelessWidget {
               children: [
                 Icon(Icons.logout),
                 SizedBox(
-                  width: 18,
+                  width: 15,
                 ),
                 Text('Logout')
               ],
