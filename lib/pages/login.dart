@@ -10,8 +10,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController txtemail;
-  TextEditingController txtpass;
+  TextEditingController? txtemail;
+  TextEditingController? txtpass;
 
   bool hidepassword = true;
 
