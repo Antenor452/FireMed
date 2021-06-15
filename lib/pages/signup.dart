@@ -11,8 +11,9 @@ class _SignUpState extends State<SignUp> {
   TextEditingController emailcon = TextEditingController();
   TextEditingController phonecon = TextEditingController();
   TextEditingController passcon = TextEditingController();
-  GlobalKey<FormState> _formstate = GlobalKey<FormState>();
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   String? _email;
+  String? _password;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class _SignUpState extends State<SignUp> {
                     end: Alignment.bottomLeft,
                     colors: [Colors.orangeAccent, Colors.orange, Colors.red])),
             child: Form(
-                key: _formstate,
+                key: _formkey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,6 +91,9 @@ class _SignUpState extends State<SignUp> {
                                 return 'Please enter a valid password';
                               }
                             },
+                            onSaved: (input) {
+                              _password = input;
+                            },
                           ),
                         ),
                       ],
@@ -139,5 +143,11 @@ class _SignUpState extends State<SignUp> {
                 ))),
       ),
     );
+  }
+
+  Future<void> SignUp() async {
+    FocusScope.of(context).unfocus();
+    FormState? formState = _formkey.currentState;
+    formState!.validate();
   }
 }

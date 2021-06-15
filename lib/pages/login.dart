@@ -10,10 +10,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController? txtemail;
-  TextEditingController? txtpass;
   bool hidepassword = true;
   GlobalKey<FormState> _formstate = GlobalKey();
+  String? _email;
+  String? _password;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +70,9 @@ class _LoginState extends State<Login> {
                               return 'Please enter a valid email';
                             }
                           },
+                          onSaved: (input) {
+                            _email = input;
+                          },
                         ),
                       ),
                       SizedBox(
@@ -106,9 +109,12 @@ class _LoginState extends State<Login> {
                           style: GoogleFonts.headlandOne(color: Colors.white),
                           obscureText: hidepassword,
                           validator: (input) {
-                            if (input!.length < 8) {
+                            if (input!.length < 6) {
                               return 'Please enter a valid password';
                             }
+                          },
+                          onSaved: (input) {
+                            _password = input;
                           },
                         ),
                       ),
