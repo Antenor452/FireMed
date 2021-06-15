@@ -12,8 +12,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController? txtemail;
   TextEditingController? txtpass;
-
   bool hidepassword = true;
+  GlobalKey<FormState> _formstate = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -42,56 +42,78 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 24,
               ),
-              Container(
-                width: 330,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                    labelText: 'Email',
-                    labelStyle: GoogleFonts.headlandOne(color: Colors.white),
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Colors.white,
-                    ),
-                  ),
-                  style: GoogleFonts.headlandOne(color: Colors.white),
-                ),
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Container(
-                width: 330,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                      labelText: 'Password',
-                      labelStyle: GoogleFonts.headlandOne(color: Colors.white),
-                      prefixIcon: Icon(
-                        Icons.vpn_key,
-                        color: Colors.white,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.remove_red_eye,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (hidepassword) {
-                              hidepassword = false;
+              Form(
+                  key: _formstate,
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 330,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 6),
+                            labelText: 'Email',
+                            labelStyle:
+                                GoogleFonts.headlandOne(color: Colors.white),
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: Colors.white,
+                            ),
+                          ),
+                          style: GoogleFonts.headlandOne(color: Colors.white),
+                          validator: (input) {
+                            bool emailValid = RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(input.toString());
+                            if (emailValid) {
                             } else {
-                              hidepassword = true;
+                              return 'Please enter a valid email';
                             }
-                          });
-                        },
-                      )),
-                  style: GoogleFonts.headlandOne(color: Colors.white),
-                  obscureText: hidepassword,
-                ),
-              ),
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Container(
+                        width: 330,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 6),
+                              labelText: 'Password',
+                              labelStyle:
+                                  GoogleFonts.headlandOne(color: Colors.white),
+                              prefixIcon: Icon(
+                                Icons.vpn_key,
+                                color: Colors.white,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  Icons.remove_red_eye,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    if (hidepassword) {
+                                      hidepassword = false;
+                                    } else {
+                                      hidepassword = true;
+                                    }
+                                  });
+                                },
+                              )),
+                          style: GoogleFonts.headlandOne(color: Colors.white),
+                          obscureText: hidepassword,
+                          validator: (input) {
+                            if (input!.length < 8) {
+                              return 'Please enter a valid password';
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  )),
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(horizontal: 18),
@@ -116,10 +138,7 @@ class _LoginState extends State<Login> {
                       child: Text('LOGIN',
                           style: GoogleFonts.headlandOne(color: Colors.orange)),
                     )),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Dashboard()));
-                },
+                onTap: SignIn,
               ),
               SizedBox(
                 height: 12,
@@ -149,5 +168,12 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  Future<void> SignIn() async {
+    FocusScope.of(context).unfocus();
+    print('start');
+    FormState? cform = _formstate.currentState;
+    cform!.validate();
   }
 }
