@@ -39,59 +39,61 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(
                       height: 18,
                     ),
-                    Container(
-                      width: 330,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: 'Email',
-                            labelStyle:
-                                GoogleFonts.headlandOne(color: Colors.white),
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: Colors.white,
-                            )),
-                        style: GoogleFonts.headlandOne(color: Colors.white),
-                        controller: emailcon,
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (input) {
-                          if (input!.isEmpty) {
-                            return 'Email is invalid';
-                          }
-                        },
-                        onSaved: (input) {
-                          _email = input;
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: 330,
-                      child: TextField(
-                        decoration: InputDecoration(
-                            labelText: 'Password',
-                            labelStyle:
-                                GoogleFonts.headlandOne(color: Colors.white),
-                            prefixIcon: Icon(
-                              Icons.vpn_key,
-                              color: Colors.white,
-                            )),
-                        style: GoogleFonts.headlandOne(color: Colors.white),
-                      ),
-                    ),
-                    Container(
-                      width: 330,
-                      child: TextField(
-                        decoration: InputDecoration(
-                            labelText: 'Phone Number',
-                            labelStyle:
-                                GoogleFonts.headlandOne(color: Colors.white),
-                            prefixIcon: Icon(
-                              Icons.phone,
-                              color: Colors.white,
-                            )),
-                        style: GoogleFonts.headlandOne(color: Colors.white),
-                        keyboardType: TextInputType.phone,
-                      ),
-                    ),
+                    Form(
+                        child: Column(
+                      children: [
+                        Container(
+                          width: 330,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                labelText: 'Email',
+                                labelStyle: GoogleFonts.headlandOne(
+                                    color: Colors.white),
+                                prefixIcon: Icon(
+                                  Icons.email,
+                                  color: Colors.white,
+                                )),
+                            style: GoogleFonts.headlandOne(color: Colors.white),
+                            controller: emailcon,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (input) {
+                              bool emailValid = RegExp(
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(input.toString());
+                              if (emailValid) {
+                              } else {
+                                return 'Please enter a valid email';
+                              }
+                            },
+                            onSaved: (input) {
+                              _email = input;
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: 330,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                helperText: 'Must be greater than 6 characters',
+                                helperStyle: GoogleFonts.headlandOne(
+                                    color: Colors.white),
+                                labelText: 'Password',
+                                labelStyle: GoogleFonts.headlandOne(
+                                    color: Colors.white),
+                                prefixIcon: Icon(
+                                  Icons.vpn_key,
+                                  color: Colors.white,
+                                )),
+                            style: GoogleFonts.headlandOne(color: Colors.white),
+                            validator: (input) {
+                              if (input!.length < 6) {
+                                return 'Please enter a valid password';
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    )),
                     SizedBox(
                       height: 12,
                     ),
