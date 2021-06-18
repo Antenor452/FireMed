@@ -1,8 +1,10 @@
 import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -179,6 +181,19 @@ class _LoginState extends State<Login> {
   Future<void> SignIn() async {
     FocusScope.of(context).unfocus();
     FormState? cform = _formstate.currentState;
-    cform!.validate();
+    if (cform!.validate()) {
+      cform.save();
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: _email.toString(), password: _password.toString());
+        if (userCredential.user!.uid.isNotEmpty) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Dashboard()));
+        }
+      } on FirebaseAuthException catch (e) {
+        print(e.code);
+      }
+    }
   }
 }

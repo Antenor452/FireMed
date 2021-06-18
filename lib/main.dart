@@ -2,6 +2,7 @@ import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main(List<String> args) {
   runApp(Home());
@@ -13,10 +14,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  void initState() {
+    super.initState();
+    Firebase.initializeApp().whenComplete(() => print('done'));
+  }
+
   Future _getCurrentUser() async {
     print('started');
     var user = await FirebaseAuth.instance.currentUser;
-    print(user);
+    print(user!.email);
 
     return User;
   }

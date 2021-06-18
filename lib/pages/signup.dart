@@ -1,4 +1,6 @@
+import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -115,7 +117,7 @@ class _SignUpState extends State<SignUp> {
                           style: GoogleFonts.headlandOne(color: Colors.orange),
                         ),
                       ),
-                      onTap: () {},
+                      onTap: SignUp,
                     ),
                     SizedBox(
                       height: 12,
@@ -148,6 +150,18 @@ class _SignUpState extends State<SignUp> {
   Future<void> SignUp() async {
     FocusScope.of(context).unfocus();
     FormState? formState = _formkey.currentState;
-    formState!.validate();
+    if (formState!.validate()) {
+      try {
+        UserCredential user = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: _email.toString(), password: _password.toString());
+        if (user.user!.uid.isNotEmpty) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Dashboard()));
+        }
+      } on FirebaseAuthException catch (e) {
+        print(e.code);
+      }
+    }
   }
 }
