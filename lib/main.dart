@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:final_year_project_app/pages/Splash.dart';
 import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,33 +17,29 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Widget? home = Splash();
+  @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    Firebase.initializeApp().whenComplete(() => print('done'));
-  }
+    Firebase.initializeApp().whenComplete(() {
+      StreamSubscription<User?> CurrentUser =
+          FirebaseAuth.instance.authStateChanges().listen((user) {});
 
-  Future _getCurrentUser() async {
-    print('started');
-    var user = await FirebaseAuth.instance.currentUser;
-    print(user!.email);
-
-    return User;
+      if (CurrentUser == null) {
+        print('User is currently signed out');
+        home = Login();
+      } else {
+        print('User is signed in');
+        setState(() {
+          home = Dashboard();
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: FutureBuilder(
-          future: _getCurrentUser(),
-          builder: (BuildContext context, AsyncSnapshot snaphot) {
-            if (snaphot.hasData) {
-              UserCredential user = snaphot.data;
-              return Dashboard();
-            } else {
-              return Login();
-            }
-          },
-        ));
+    return MaterialApp(debugShowCheckedModeBanner: false, home: home);
   }
 }

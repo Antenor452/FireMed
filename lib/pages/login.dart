@@ -187,7 +187,8 @@ class _LoginState extends State<Login> {
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: _email.toString(), password: _password.toString());
-        if (userCredential.user!.uid.isNotEmpty) {
+        print(FirebaseAuth.instance.currentUser);
+        if (FirebaseAuth.instance.currentUser!.uid.isNotEmpty) {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => Dashboard()));
         }
