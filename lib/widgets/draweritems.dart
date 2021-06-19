@@ -1,5 +1,6 @@
 import 'package:final_year_project_app/pages/termsandconditions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -154,6 +155,7 @@ class DrawerItems extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
+              FirebaseAuth.instance.signOut();
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Login()));
             },

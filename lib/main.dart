@@ -23,18 +23,20 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
     Firebase.initializeApp().whenComplete(() {
-      StreamSubscription<User?> CurrentUser =
-          FirebaseAuth.instance.authStateChanges().listen((user) {});
-
-      if (CurrentUser == null) {
-        print('User is currently signed out');
-        home = Login();
-      } else {
-        print('User is signed in');
-        setState(() {
-          home = Dashboard();
-        });
-      }
+      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        if (user == null) {
+          print('User is not signed in');
+          setState(() {
+            home = Login();
+          });
+        } else {
+          print('user is signed in');
+          print(user.email);
+          setState(() {
+            home = Dashboard();
+          });
+        }
+      });
     });
   }
 
