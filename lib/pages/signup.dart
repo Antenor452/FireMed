@@ -10,12 +10,12 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  TextEditingController emailcon = TextEditingController();
-  TextEditingController phonecon = TextEditingController();
-  TextEditingController passcon = TextEditingController();
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   String? _email;
   String? _password;
+  String? _username;
+  String? _phone;
+  bool hidepassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,35 +30,35 @@ class _SignUpState extends State<SignUp> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomLeft,
                     colors: [Colors.orangeAccent, Colors.orange, Colors.red])),
-            child: Form(
-                key: _formkey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text('Create an account',
-                        style: GoogleFonts.headlandOne(
-                            fontSize: 18, color: Colors.white)),
-                    SizedBox(
-                      height: 18,
-                    ),
-                    Form(
-                        child: Column(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('Create a new account',
+                    style: GoogleFonts.headlandOne(
+                        fontSize: 24, color: Colors.white)),
+                SizedBox(
+                  height: 24,
+                ),
+                Form(
+                    key: _formkey,
+                    child: Column(
                       children: [
                         Container(
                           width: 330,
                           child: TextFormField(
                             decoration: InputDecoration(
-                                labelText: 'Email',
-                                labelStyle: GoogleFonts.headlandOne(
-                                    color: Colors.white),
-                                prefixIcon: Icon(
-                                  Icons.email,
-                                  color: Colors.white,
-                                )),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 6),
+                              labelText: 'Email',
+                              labelStyle:
+                                  GoogleFonts.headlandOne(color: Colors.white),
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: Colors.white,
+                              ),
+                            ),
                             style: GoogleFonts.headlandOne(color: Colors.white),
-                            controller: emailcon,
-                            keyboardType: TextInputType.emailAddress,
                             validator: (input) {
                               bool emailValid = RegExp(
                                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -77,17 +77,32 @@ class _SignUpState extends State<SignUp> {
                           width: 330,
                           child: TextFormField(
                             decoration: InputDecoration(
-                                helperText: 'Must be greater than 6 characters',
-                                helperStyle: GoogleFonts.headlandOne(
-                                    color: Colors.white),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 18, vertical: 6),
                                 labelText: 'Password',
                                 labelStyle: GoogleFonts.headlandOne(
                                     color: Colors.white),
                                 prefixIcon: Icon(
                                   Icons.vpn_key,
                                   color: Colors.white,
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    Icons.remove_red_eye,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      if (hidepassword) {
+                                        hidepassword = false;
+                                      } else {
+                                        hidepassword = true;
+                                      }
+                                    });
+                                  },
                                 )),
                             style: GoogleFonts.headlandOne(color: Colors.white),
+                            obscureText: hidepassword,
                             validator: (input) {
                               if (input!.length < 6) {
                                 return 'Please enter a valid password';
@@ -100,67 +115,69 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ],
                     )),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    InkWell(
-                      child: Container(
-                        width: 330,
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
+                SizedBox(
+                  height: 12,
+                ),
+                InkWell(
+                  child: Container(
+                    width: 330,
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.white),
+                    child: Center(
+                        child: Text(
+                      'SIGN UP',
+                      style: GoogleFonts.headlandOne(color: Colors.orange),
+                    )),
+                  ),
+                  onTap: SignUp,
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                InkWell(
+                  child: Container(
+                      width: 330,
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: Text(
-                          'SIGN UP',
-                          style: GoogleFonts.headlandOne(color: Colors.orange),
-                        ),
-                      ),
-                      onTap: SignUp,
-                    ),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    InkWell(
-                      child: Container(
-                        width: 330,
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: Colors.white)),
-                        child: Text(
-                          'LOGIN',
-                          style: GoogleFonts.headlandOne(color: Colors.white),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Login()));
-                      },
-                    )
-                  ],
-                ))),
+                          border: Border.all(color: Colors.white)),
+                      child: Center(
+                        child: Text('LOGIN',
+                            style:
+                                GoogleFonts.headlandOne(color: Colors.white)),
+                      )),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login()));
+                  },
+                ),
+              ],
+            )),
       ),
     );
   }
 
-  Future<void> SignUp() async {
+  SignUp() async {
     FocusScope.of(context).unfocus();
-    FormState? formState = _formkey.currentState;
-    if (formState!.validate()) {
+    FormState? _cform = _formkey.currentState;
+    if (_cform!.validate()) {
+      _cform.save();
+      print(_email);
       try {
         UserCredential user = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
                 email: _email.toString(), password: _password.toString());
-        if (user.user!.uid.isNotEmpty) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Dashboard()));
-        }
+        FirebaseAuth.instance.authStateChanges().listen((Nuser) {
+          if (Nuser != null) {
+            print('User registered');
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Dashboard()));
+          }
+        });
       } on FirebaseAuthException catch (e) {
-        print(e.code);
+        print(e);
       }
     }
   }
