@@ -1,6 +1,7 @@
 import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,6 +12,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   String? _email;
   String? _password;
   String? _username;
@@ -70,6 +72,31 @@ class _SignUpState extends State<SignUp> {
                             },
                             onSaved: (input) {
                               _email = input;
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: 330,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 6),
+                              labelText: 'Username',
+                              labelStyle:
+                                  GoogleFonts.headlandOne(color: Colors.white),
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: Colors.white,
+                              ),
+                            ),
+                            style: GoogleFonts.headlandOne(color: Colors.white),
+                            validator: (input) {
+                              if (input!.length < 3) {
+                                return 'Please enter a username of valid length';
+                              }
+                            },
+                            onSaved: (input) {
+                              _username = input;
                             },
                           ),
                         ),
