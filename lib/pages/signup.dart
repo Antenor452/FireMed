@@ -122,6 +122,8 @@ class _SignUpState extends State<SignUp> {
                             },
                             onSaved: (input) {
                               _phone = input;
+
+                              print(_phone.toString());
                             },
                           ),
                         ),
@@ -212,6 +214,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   SignUp() async {
+    print('start');
     FocusScope.of(context).unfocus();
     FormState? _cform = _formkey.currentState;
     if (_cform!.validate()) {
@@ -224,20 +227,10 @@ class _SignUpState extends State<SignUp> {
 
         FirebaseAuth.instance.authStateChanges().listen((Nuser) {
           if (Nuser != null) {
-            firestore.collection('Users').add({
-              'uid': Nuser.uid,
-              'Username': _username,
-              'Email': _email,
-              'Phone': _phone
-            }).then((value) {
-              print('user added');
-              FirebaseAuth.instance.currentUser!.updateDisplayName(_username);
-              print('User registered');
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Dashboard()));
-            }).catchError((error) {
-              print('failed');
-            });
+            FirebaseAuth.instance.currentUser!
+                .updateDisplayName(_username)
+                .then((value) => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Dashboard())));
           }
         });
       } on FirebaseAuthException catch (e) {
