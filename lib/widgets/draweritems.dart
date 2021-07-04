@@ -11,11 +11,22 @@ import 'package:final_year_project_app/pages/tipsspage.dart';
 
 class DrawerItems extends StatelessWidget {
   String? uid = FirebaseAuth.instance.currentUser!.uid;
+  late Future username;
 
-  void getusername() async {
-    Query<Map<String, dynamic>> username =
-        await FirebaseFirestore.instance.collection('Users');
-    print(username.toString());
+  Future<String> getusername() async {
+    Object? userdata = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('uid', isEqualTo: uid)
+        .get()
+        .then((QuerySnapshot files) {
+      if (files.docs.isEmpty) {
+        print(files.docs[0].data());
+      }
+      return files.docs[0].get('Username');
+    });
+    print(userdata);
+
+    return userdata.toString();
   }
 
   void launchURL() async {
