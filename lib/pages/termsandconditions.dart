@@ -1,6 +1,7 @@
 import 'package:final_year_project_app/widgets/draweritems.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '';
 
 class Terms extends StatelessWidget {
   @override

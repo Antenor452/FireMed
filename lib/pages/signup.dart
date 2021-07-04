@@ -104,6 +104,31 @@ class _SignUpState extends State<SignUp> {
                           width: 330,
                           child: TextFormField(
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 6),
+                              labelText: 'Phone',
+                              labelStyle:
+                                  GoogleFonts.headlandOne(color: Colors.white),
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: Colors.white,
+                              ),
+                            ),
+                            style: GoogleFonts.headlandOne(color: Colors.white),
+                            validator: (input) {
+                              if (input!.length < 9) {
+                                return 'Please enter a valid phone number';
+                              }
+                            },
+                            onSaved: (input) {
+                              _phone = input;
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: 330,
+                          child: TextFormField(
+                            decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 18, vertical: 6),
                                 labelText: 'Password',
@@ -196,11 +221,22 @@ class _SignUpState extends State<SignUp> {
         UserCredential user = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
                 email: _email.toString(), password: _password.toString());
+
         FirebaseAuth.instance.authStateChanges().listen((Nuser) {
           if (Nuser != null) {
-            print('User registered');
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Dashboard()));
+            firestore.collection('Users').add({
+              'uid': Nuser.uid,
+              'Username': _username,
+              'Email': _email,
+              'Phone': _phone
+            }).then((value) {
+              print('user added');
+              print('User registered');
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Dashboard()));
+            }).catchError((error) {
+              print('failed');
+            });
           }
         });
       } on FirebaseAuthException catch (e) {

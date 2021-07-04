@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project_app/pages/termsandconditions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +10,14 @@ import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/tipsspage.dart';
 
 class DrawerItems extends StatelessWidget {
+  String? uid = FirebaseAuth.instance.currentUser!.uid;
+
+  void getusername() async {
+    Query<Map<String, dynamic>> username =
+        await FirebaseFirestore.instance.collection('Users');
+    print(username.toString());
+  }
+
   void launchURL() async {
     const url = 'https://www.gnfs.gov.gh/';
     if (await canLaunch(url)) {
@@ -40,7 +49,7 @@ class DrawerItems extends StatelessWidget {
                   SizedBox(
                     height: 18,
                   ),
-                  Text('Rahim Flash',
+                  Text(FirebaseAuth.instance.currentUser!.email.toString(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -141,6 +150,7 @@ class DrawerItems extends StatelessWidget {
                 Text('About')
               ],
             ),
+            onTap: getusername,
           ),
           ListTile(
             title: Row(
