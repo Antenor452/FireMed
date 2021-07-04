@@ -4,40 +4,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../pages/login.dart';
 import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/tipsspage.dart';
 
-class DrawerItems extends StatelessWidget {
-  String? uid = FirebaseAuth.instance.currentUser!.uid;
-  late Future username;
+class DrawerItems extends StatefulWidget {
+  @override
+  _DrawerItemsState createState() => _DrawerItemsState();
+}
 
-  Future<String> getusername() async {
-    Object? userdata = await FirebaseFirestore.instance
-        .collection('Users')
-        .where('uid', isEqualTo: uid)
-        .get()
-        .then((QuerySnapshot files) {
-      if (files.docs.isEmpty) {
-        print(files.docs[0].data());
-      }
-      return files.docs[0].get('Username');
-    });
-    print(userdata);
-
-    return userdata.toString();
-  }
-
-  void launchURL() async {
-    const url = 'https://www.gnfs.gov.gh/';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
+class _DrawerItemsState extends State<DrawerItems> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -53,18 +31,17 @@ class DrawerItems extends StatelessWidget {
                       color: Colors.white,
                       child: Icon(
                         FontAwesomeIcons.userCircle,
-                        size: 70,
+                        size: 50,
                       ),
                     ),
                   ),
                   SizedBox(
                     height: 18,
                   ),
-                  Text(FirebaseAuth.instance.currentUser!.email.toString(),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ))
+                  Container(
+                    child: Text(FirebaseAuth.instance.currentUser!.displayName
+                        .toString()),
+                  ),
                 ],
               ),
             ),
@@ -121,9 +98,6 @@ class DrawerItems extends StatelessWidget {
                 Text('Fire Service Website')
               ],
             ),
-            onTap: () {
-              launchURL();
-            },
           ),
           Divider(color: Colors.black),
           ListTile(
@@ -161,7 +135,6 @@ class DrawerItems extends StatelessWidget {
                 Text('About')
               ],
             ),
-            onTap: getusername,
           ),
           ListTile(
             title: Row(

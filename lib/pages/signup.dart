@@ -231,6 +231,7 @@ class _SignUpState extends State<SignUp> {
               'Phone': _phone
             }).then((value) {
               print('user added');
+              FirebaseAuth.instance.currentUser!.updateDisplayName(_username);
               print('User registered');
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Dashboard()));

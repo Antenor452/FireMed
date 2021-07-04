@@ -8,22 +8,26 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-              Colors.orangeAccent,
-              Colors.orange,
-              Colors.red,
-            ])),
-        child: Center(
-            child: Text('FireMed',
-                style: GoogleFonts.headlandOne(
-                  fontSize: 30,
-                  color: Colors.white,
-                ))),
-      ),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                Colors.orangeAccent,
+                Colors.orange,
+                Colors.red,
+              ])),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('FireMed',
+                  style: GoogleFonts.headlandOne(
+                    fontSize: 30,
+                    color: Colors.white,
+                  )),
+              CircularProgressIndicator()
+            ],
+          )),
     );
   }
 }
