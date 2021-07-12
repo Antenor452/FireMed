@@ -191,6 +191,12 @@ class _LoginState extends State<Login> {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text('Invalid User Details')));
             break;
+          case 'network-request-failed':
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Check Internet Connection'),
+              duration: Duration(seconds: 1),
+            ));
+            break;
         }
       }
     }
