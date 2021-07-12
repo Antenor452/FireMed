@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_year_project_app/main.dart';
 import 'package:final_year_project_app/pages/termsandconditions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,12 +11,8 @@ import '../pages/login.dart';
 import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/tipsspage.dart';
 
-class DrawerItems extends StatefulWidget {
-  @override
-  _DrawerItemsState createState() => _DrawerItemsState();
-}
-
-class _DrawerItemsState extends State<DrawerItems> {
+class drawerItems extends StatelessWidget {
+  String username = FirebaseAuth.instance.currentUser!.displayName.toString();
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -39,9 +36,10 @@ class _DrawerItemsState extends State<DrawerItems> {
                     height: 18,
                   ),
                   Container(
-                    child: Text(FirebaseAuth.instance.currentUser!.displayName
-                        .toString()),
-                  ),
+                      child: Text(
+                    username,
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  )),
                 ],
               ),
             ),
@@ -149,9 +147,9 @@ class _DrawerItemsState extends State<DrawerItems> {
           ),
           ListTile(
             onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Login()));
               FirebaseAuth.instance.signOut();
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Login()));
             },
             title: Row(
               children: [

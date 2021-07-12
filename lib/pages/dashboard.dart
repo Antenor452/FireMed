@@ -5,11 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Dashboard extends StatelessWidget {
-  String? uid = FirebaseAuth.instance.currentUser!.uid;
-
   @override
   Widget build(BuildContext context) {
-    print(FirebaseAuth.instance.currentUser!.uid);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(textTheme: GoogleFonts.headlandOneTextTheme()),
@@ -22,7 +19,7 @@ class Dashboard extends StatelessWidget {
             centerTitle: true,
             backgroundColor: Colors.orange,
           ),
-          drawer: DrawerItems(),
+          drawer: drawerItems(),
           body: Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -41,7 +38,7 @@ class Dashboard extends StatelessWidget {
                   child: ClipOval(
                     child: InkWell(
                       onTap: () {
-                        print(uid);
+                        print('Alert');
                       },
                       child: Container(
                         height: 100,

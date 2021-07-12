@@ -23,7 +23,7 @@ class _TipsPageState extends State<TipsPage> {
           centerTitle: true,
           backgroundColor: Colors.orange,
         ),
-        drawer: DrawerItems(),
+        drawer: drawerItems(),
         body: Container(
           child: ListView(
             children: [
@@ -123,8 +123,8 @@ class _TipsPageState extends State<TipsPage> {
 }
 
 class CardView extends StatelessWidget {
-  String title;
-  List<Widget> items;
+  final String title;
+  final List<Widget> items;
   CardView(this.title, this.items);
   @override
   Widget build(BuildContext context) {

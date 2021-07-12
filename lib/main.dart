@@ -6,6 +6,7 @@ import 'package:final_year_project_app/pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main(List<String> args) {
   runApp(Home());
@@ -42,6 +43,11 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: home);
+    return MaterialApp(
+        theme: ThemeData(
+          textTheme: GoogleFonts.headlandOneTextTheme(),
+        ),
+        debugShowCheckedModeBanner: false,
+        home: home);
   }
 }

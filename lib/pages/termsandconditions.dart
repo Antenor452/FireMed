@@ -18,7 +18,7 @@ class Terms extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.orange,
         ),
-        drawer: DrawerItems(),
+        drawer: drawerItems(),
         body: Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 16),
