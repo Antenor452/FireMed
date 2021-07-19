@@ -11,10 +11,19 @@ import '../pages/login.dart';
 import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/tipsspage.dart';
 
-class drawerItems extends StatelessWidget {
-  String username = FirebaseAuth.instance.currentUser!.displayName.toString();
+class DrawerItems extends StatelessWidget {
+  Future<void> _signOut(context) async {
+    Navigator.of(context).pop();
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Login()),
+        (Route<dynamic> route) => false);
+    await FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var cuser = FirebaseAuth.instance.currentUser?.displayName;
     return Drawer(
       child: ListView(
         children: [
@@ -37,7 +46,7 @@ class drawerItems extends StatelessWidget {
                   ),
                   Container(
                       child: Text(
-                    username,
+                    cuser.toString(),
                     style: TextStyle(color: Colors.white, fontSize: 24),
                   )),
                 ],
@@ -61,6 +70,7 @@ class drawerItems extends StatelessWidget {
               ],
             ),
             onTap: () {
+              Navigator.pop(context);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Dashboard()));
             },
@@ -77,6 +87,7 @@ class drawerItems extends StatelessWidget {
               ],
             ),
             onTap: () {
+              Navigator.pop(context);
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => TipsPage()));
             },
@@ -109,6 +120,7 @@ class drawerItems extends StatelessWidget {
               ],
             ),
             onTap: () {
+              Navigator.pop(context);
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Terms()));
             },
@@ -146,10 +158,12 @@ class drawerItems extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Login()));
-              FirebaseAuth.instance.signOut();
+            onTap: () async {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => Login()),
+                  (route) => false);
+              await FirebaseAuth.instance.signOut();
             },
             title: Row(
               children: [

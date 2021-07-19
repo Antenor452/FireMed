@@ -1,3 +1,4 @@
+import 'package:final_year_project_app/pages/login.dart';
 import 'package:final_year_project_app/widgets/draweritems.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class Dashboard extends StatelessWidget {
             centerTitle: true,
             backgroundColor: Colors.orange,
           ),
-          drawer: drawerItems(),
+          drawer: DrawerItems(),
           body: Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -62,14 +63,14 @@ class Dashboard extends StatelessWidget {
                                     color: Colors.white,
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           )),

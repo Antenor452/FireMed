@@ -203,7 +203,7 @@ class _SignUpState extends State<SignUp> {
                                 GoogleFonts.headlandOne(color: Colors.white)),
                       )),
                   onTap: () {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => Login()));
                   },
                 ),
@@ -229,7 +229,7 @@ class _SignUpState extends State<SignUp> {
           if (Nuser != null) {
             FirebaseAuth.instance.currentUser!
                 .updateDisplayName(_username)
-                .then((value) => Navigator.push(context,
+                .then((value) => Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => Dashboard())));
           }
         });

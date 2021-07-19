@@ -1,4 +1,5 @@
 import 'package:final_year_project_app/widgets/draweritems.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '';
@@ -18,7 +19,7 @@ class Terms extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.orange,
         ),
-        drawer: drawerItems(),
+        drawer: DrawerItems(),
         body: Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 16),

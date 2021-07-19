@@ -15,6 +15,7 @@ class _LoginState extends State<Login> {
   GlobalKey<FormState> _formstate = GlobalKey();
   String? _email;
   String? _password;
+  Widget loader = Container();
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +119,7 @@ class _LoginState extends State<Login> {
                     ),
                   ],
                 )),
+            loader,
             Container(
               width: double.infinity,
               margin: EdgeInsets.symmetric(horizontal: 18),
@@ -162,7 +164,7 @@ class _LoginState extends State<Login> {
               ),
               onTap: () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
+                    .pushReplacement(MaterialPageRoute(builder: (context) {
                   return SignUp();
                 }));
               },
@@ -175,19 +177,35 @@ class _LoginState extends State<Login> {
 
   Future<void> signIn() async {
     FocusScope.of(context).unfocus();
+
     FormState? cform = _formstate.currentState;
     if (cform!.validate()) {
       cform.save();
       try {
+        setState(() {
+          loader = Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Container(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        });
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: _email.toString(), password: _password.toString());
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Dashboard()));
       } on FirebaseAuthException catch (e) {
         print(e.code);
+        setState(() {
+          loader = Container();
+        });
         switch (e.code) {
           case 'user-not-found':
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text('Invalid User Details')));
+            break;
+          case 'wrong-password':
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text('Invalid User Details')));
             break;
