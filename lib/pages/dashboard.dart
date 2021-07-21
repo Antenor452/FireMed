@@ -18,7 +18,7 @@ class Dashboard extends StatelessWidget {
               style: GoogleFonts.headlandOne(),
             ),
             centerTitle: true,
-            backgroundColor: Colors.orange,
+            backgroundColor: Color(0xFFFF5C00),
           ),
           drawer: DrawerItems(),
           body: Container(

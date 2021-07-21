@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:final_year_project_app/main.dart';
 import 'package:final_year_project_app/pages/termsandconditions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,14 +10,7 @@ import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/tipsspage.dart';
 
 class DrawerItems extends StatelessWidget {
-  Future<void> _signOut(context) async {
-    Navigator.of(context).pop();
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => Login()),
-        (Route<dynamic> route) => false);
-    await FirebaseAuth.instance.signOut();
-  }
+  String url = "https://www.gnfs.gov.gh/";
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +43,7 @@ class DrawerItems extends StatelessWidget {
                 ],
               ),
             ),
-            decoration: BoxDecoration(color: Colors.orangeAccent),
+            decoration: BoxDecoration(color: Color(0xFFFF5C00)),
           ),
           Container(
             margin: EdgeInsets.only(top: 12, left: 18),
@@ -98,6 +89,13 @@ class DrawerItems extends StatelessWidget {
             child: Text('Useful'),
           ),
           ListTile(
+            onTap: () async {
+              try {
+                await launch(url);
+              } catch (e) {
+                print(e);
+              }
+            },
             title: Row(
               children: [
                 Icon(FontAwesomeIcons.fire),

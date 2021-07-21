@@ -22,7 +22,7 @@ class _TipsPageState extends State<TipsPage> {
             style: GoogleFonts.headlandOne(),
           ),
           centerTitle: true,
-          backgroundColor: Colors.orange,
+          backgroundColor: Color(0xFFFF5C00),
         ),
         drawer: DrawerItems(),
         body: Container(

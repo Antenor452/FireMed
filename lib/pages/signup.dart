@@ -116,7 +116,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             style: GoogleFonts.headlandOne(color: Colors.white),
                             validator: (input) {
-                              if (input!.length < 9) {
+                              if (input!.length != 10) {
                                 return 'Please enter a valid phone number';
                               }
                             },
@@ -229,8 +229,21 @@ class _SignUpState extends State<SignUp> {
           if (Nuser != null) {
             FirebaseAuth.instance.currentUser!
                 .updateDisplayName(_username)
-                .then((value) => Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Dashboard())));
+                .then((value) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => Dashboard()));
+              try {
+                firestore.collection('Users').add({
+                  'ID': FirebaseAuth.instance.currentUser!.uid,
+                  'Username': _username,
+                  'Email': _email,
+                  'Phone': _phone,
+                  'Type': 'user'
+                }).then((value) => print('user added to db'));
+              } catch (e) {
+                print(e);
+              }
+            });
           }
         });
       } on FirebaseAuthException catch (e) {

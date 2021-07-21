@@ -1,3 +1,5 @@
+import 'package:final_year_project_app/fire_pages/fire_dashboard.dart';
+import 'package:final_year_project_app/fire_pages/fire_login.dart';
 import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,11 +28,7 @@ class _LoginState extends State<Login> {
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-              Colors.orangeAccent,
-              Colors.orange,
-              Colors.red,
-            ])),
+                colors: [Color(0xFFFFAB07), Color(0xFFFF5C00)])),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -168,6 +166,18 @@ class _LoginState extends State<Login> {
                   return SignUp();
                 }));
               },
+            ),
+            Container(
+              child: TextButton(
+                child: Text(
+                  'Sign in as fire station',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => FireLogin()));
+                },
+              ),
             )
           ],
         ),
