@@ -1,5 +1,3 @@
-import 'package:final_year_project_app/fire_pages/fire_dashboard.dart';
-import 'package:final_year_project_app/fire_pages/fire_login.dart';
 import 'package:final_year_project_app/pages/dashboard.dart';
 import 'package:final_year_project_app/pages/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -167,18 +165,6 @@ class _LoginState extends State<Login> {
                 }));
               },
             ),
-            Container(
-              child: TextButton(
-                child: Text(
-                  'Sign in as fire station',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => FireLogin()));
-                },
-              ),
-            )
           ],
         ),
       ),
