@@ -17,6 +17,7 @@ class _SignUpState extends State<SignUp> {
   String? _password;
   String? _username;
   String? _phone;
+  String? _fidas;
   bool hidepassword = true;
 
   @override
@@ -131,6 +132,29 @@ class _SignUpState extends State<SignUp> {
                           width: 330,
                           child: TextFormField(
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 6),
+                              labelText: 'Fidas ID',
+                              labelStyle: TextStyle(color: Colors.white),
+                              prefixIcon: Icon(
+                                Icons.important_devices,
+                                color: Colors.white,
+                              ),
+                            ),
+                            onSaved: (input) {
+                              _fidas = input.toString();
+                              if (input!.length < 5) {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                        'Fidas ID is required to connect your Fidas device to your account')));
+                              }
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: 330,
+                          child: TextFormField(
+                            decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 18, vertical: 6),
                                 labelText: 'Password',
@@ -237,6 +261,7 @@ class _SignUpState extends State<SignUp> {
                   'ID': FirebaseAuth.instance.currentUser!.uid,
                   'Username': _username,
                   'Email': _email,
+                  'Fidas ID': _fidas!.isEmpty ? 'Not Connected' : _fidas,
                   'Phone': _phone,
                   'Type': 'user'
                 }).then((value) => print('user added to db'));

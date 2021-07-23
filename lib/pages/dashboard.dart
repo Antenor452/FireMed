@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project_app/pages/login.dart';
 import 'package:final_year_project_app/widgets/draweritems.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,7 +6,28 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
+  @override
+  _DashboardState createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  String? fidasid;
+  bool? isConnected;
+  var docRef = FirebaseFirestore.instance.collection('Users');
+  void getdata() async {
+    var data = await docRef.where('Username', isEqualTo: 'Beansgh').get();
+
+    print(data.size);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getdata();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,6 +57,22 @@ class Dashboard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Container(
+                  child: Column(children: [
+                    Text(
+                      ' Fidas Status',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Container(
+                      width: 50,
+                      height: 10,
+                      decoration: BoxDecoration(color: Colors.red),
+                    )
+                  ]),
+                ),
+                SizedBox(
+                  height: 18,
+                ),
                 Container(
                   child: ClipOval(
                     child: InkWell(
