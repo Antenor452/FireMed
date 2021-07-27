@@ -1,3 +1,4 @@
+import 'package:final_year_project_app/pages/profile.dart';
 import 'package:final_year_project_app/pages/termsandconditions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,11 +36,17 @@ class DrawerItems extends StatelessWidget {
                   SizedBox(
                     height: 18,
                   ),
-                  Container(
-                      child: Text(
-                    cuser.toString(),
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                  )),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Profile()));
+                    },
+                    child: Container(
+                        child: Text(
+                      cuser.toString(),
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    )),
+                  ),
                 ],
               ),
             ),

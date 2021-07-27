@@ -182,7 +182,9 @@ class _LoginState extends State<Login> {
           loader = Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Container(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
             ),
           );
         });
