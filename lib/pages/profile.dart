@@ -11,9 +11,11 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final FireAuth = FirebaseAuth.instance.currentUser;
+
   String? _username;
   String? _email;
   String? _phone;
+  String? _PreviousPhone;
   String? _fidas;
   String? _password;
   bool hidepassword = true;
@@ -30,12 +32,15 @@ class _ProfileState extends State<Profile> {
     try {
       var userdet = await FirebaseFirestore.instance
           .collection('Users')
-          .where('Email', isEqualTo: _email)
+          .where('Email', isEqualTo: FireAuth!.email)
           .get();
-      print(userdet.docs.first);
-    } catch (e) {
-      print(e);
-    }
+      var data = userdet.docs.first;
+
+      setState(() {
+        _PreviousPhone = data.data()['Phone'];
+        _fidas = data.data()['Fidas ID'];
+      });
+    } catch (e) {}
   }
 
   @override
@@ -76,7 +81,7 @@ class _ProfileState extends State<Profile> {
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                      labelText: 'Email :' + FireAuth!.email.toString(),
+                      labelText: 'Email : ' + FireAuth!.email.toString(),
                       labelStyle: TextStyle(
                         color: Color(0xFFFF5C00),
                       ),
@@ -107,7 +112,7 @@ class _ProfileState extends State<Profile> {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 18, vertical: 6),
                       labelText:
-                          'Username :' + FireAuth!.displayName.toString(),
+                          'Username : ' + FireAuth!.displayName.toString(),
                       labelStyle: TextStyle(
                         color: Color(0xFFFF5C00),
                       ),
@@ -121,7 +126,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     validator: (input) {
                       if (input!.length < 3) {
-                        return 'Please enter a username of valid length';
+                        return 'Please enter a username of valid length ';
                       }
                     },
                     onSaved: (input) {
@@ -135,7 +140,7 @@ class _ProfileState extends State<Profile> {
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                      labelText: 'Phone :',
+                      labelText: 'Phone : ' + _PreviousPhone.toString(),
                       labelStyle: TextStyle(
                         color: Color(0xFFFF5C00),
                       ),
@@ -165,7 +170,7 @@ class _ProfileState extends State<Profile> {
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                      labelText: 'Fidas ID :Please connect your fidas device',
+                      labelText: 'Fidas ID : ' + _fidas.toString(),
                       labelStyle: TextStyle(
                         color: Color(0xFFFF5C00),
                       ),

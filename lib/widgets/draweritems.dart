@@ -18,6 +18,7 @@ class DrawerItems extends StatelessWidget {
     var cuser = FirebaseAuth.instance.currentUser?.displayName;
     return Drawer(
       child: ListView(
+        padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
             child: Container(

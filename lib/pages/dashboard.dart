@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:final_year_project_app/pages/login.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:final_year_project_app/widgets/draweritems.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart' as rtdb;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,13 +13,26 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  String? fidasid;
+  rtdb.FirebaseDatabase database = rtdb.FirebaseDatabase.instance;
+
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  late String fidasid;
   bool? isConnected;
   var docRef = FirebaseFirestore.instance.collection('Users');
   void getdata() async {
-    var data = await docRef.where('Username', isEqualTo: 'Beansgh').get();
+    var data = await docRef.where('ID', isEqualTo: uid).get();
+    var userdet = data.docs.first.data();
+    fidasid = userdet['Fidas ID'];
+    print(fidasid);
+  }
 
-    print(data.size);
+  void triggerAlarm() async {
+    database
+        .reference()
+        .child('Fidas')
+        .child('001')
+        .push()
+        .set({'Status': '1'});
   }
 
   @override
@@ -77,7 +91,11 @@ class _DashboardState extends State<Dashboard> {
                   child: ClipOval(
                     child: InkWell(
                       onTap: () {
-                        print('Alert');
+                        database
+                            .reference()
+                            .child('Fidas')
+                            .child('001')
+                            .update({'Status': '1'});
                       },
                       child: Container(
                         height: 100,
