@@ -14,25 +14,46 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   rtdb.FirebaseDatabase database = rtdb.FirebaseDatabase.instance;
-
+  Color alertcolor = Colors.green;
   String uid = FirebaseAuth.instance.currentUser!.uid;
   late String fidasid;
   bool? isConnected;
+  late String status;
   var docRef = FirebaseFirestore.instance.collection('Users');
   void getdata() async {
     var data = await docRef.where('ID', isEqualTo: uid).get();
     var userdet = data.docs.first.data();
     fidasid = userdet['Fidas ID'];
     print(fidasid);
+    var value = await database
+        .reference()
+        .child('Fidas')
+        .child(fidasid)
+        .child('Status')
+        .get();
+    if (value.value == '1') {
+      setState(() {
+        alertcolor = Colors.red;
+      });
+    }
   }
 
-  void triggerAlarm() async {
+  void updateAlarmStatus() async {
+    var value = await database
+        .reference()
+        .child('Fidas')
+        .child(fidasid)
+        .child('Status')
+        .get();
+
     database
         .reference()
         .child('Fidas')
-        .child('001')
-        .push()
-        .set({'Status': '1'});
+        .child(fidasid)
+        .update({'Status': value.value == '0' ? '1' : '0'});
+    setState(() {
+      value.value == '0' ? alertcolor = Colors.red : alertcolor = Colors.green;
+    });
   }
 
   @override
@@ -80,7 +101,7 @@ class _DashboardState extends State<Dashboard> {
                     Container(
                       width: 50,
                       height: 10,
-                      decoration: BoxDecoration(color: Colors.red),
+                      decoration: BoxDecoration(color: alertcolor),
                     )
                   ]),
                 ),
@@ -90,13 +111,7 @@ class _DashboardState extends State<Dashboard> {
                 Container(
                   child: ClipOval(
                     child: InkWell(
-                      onTap: () {
-                        database
-                            .reference()
-                            .child('Fidas')
-                            .child('001')
-                            .update({'Status': '1'});
-                      },
+                      onTap: updateAlarmStatus,
                       child: Container(
                         height: 100,
                         width: 100,
